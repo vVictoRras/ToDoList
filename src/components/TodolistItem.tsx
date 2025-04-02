@@ -34,7 +34,7 @@ export const TodolistItem = ({title, tasks, deleteTask,changeFilter}: Props) => 
                 )}
             <div>
                 <Button title={'All'} onClick={()=>changeFilter('all')} />
-                <Button title={'Active'} onClick={()=>changeFilter('active')}  />
+                <Button title={'Active'} onClick={()=>changeFilter('active')} />
                 <Button title={'Completed'} onClick={()=>changeFilter('completed')} />
             </div>
         </div>

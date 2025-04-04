@@ -1,6 +1,6 @@
 import {FilterValues, Task} from "../App.tsx";
 import {Button} from "./Button.tsx";
-import {ChangeEvent, KeyboardEventHandler, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
     title: string,
@@ -28,7 +28,6 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, addTask}: 
     const addNewTask=()=>{
         addTask(newTaskTitle);
         setNewTaskTitle("")
-
 
     }
     return (

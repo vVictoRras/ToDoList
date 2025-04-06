@@ -15,27 +15,26 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, addTask}: 
 
     const [newTaskTitle, setNewTaskTitle] = useState("");
 
-    const changeTaskTitleHandler =(e:ChangeEvent<HTMLInputElement>) =>{
-          setNewTaskTitle(e.currentTarget.value)
+    const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewTaskTitle(e.currentTarget.value)
     }
 
-    const createTaskOnEnterHandler=(event: KeyboardEvent<HTMLInputElement>)=>{
-         if (event.key === 'Enter'){
+    const createTaskOnEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
             addTask(newTaskTitle);
             setNewTaskTitle("")
-         }
+        }
     }
-    const addNewTask=()=>{
+    const addNewTask = () => {
         addTask(newTaskTitle);
         setNewTaskTitle("")
-
     }
     return (
         <div>
             <h3>{title}</h3>
             <div>
                 <input value={newTaskTitle}
-                       onChange={changeTaskTitleHandler }
+                       onChange={changeTaskTitleHandler}
                        onKeyPress={createTaskOnEnterHandler}
                 />
                 <button onClick={addNewTask}>+

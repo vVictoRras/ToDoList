@@ -41,7 +41,6 @@ export const App = () => {
 
     }
 
-
     let filteredTasks = tasks
     if (filter === 'active') {
         filteredTasks = tasks.filter(task => !task.isDone)
@@ -49,7 +48,6 @@ export const App = () => {
     if (filter === 'completed') {
         filteredTasks = tasks.filter(task => task.isDone)
     }
-
 
     return (
         <div className="app">

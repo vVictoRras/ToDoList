@@ -27,6 +27,7 @@ export const App = () => {
         {id: v1(), title: 'RTK query', isDone: false},
     ])
     console.log(tasks)
+    console.log(...tasks)
 
     const deleteTask = (taskId: string) => {
         const filteredTasks = tasks.filter(task => {
@@ -35,7 +36,7 @@ export const App = () => {
         setTasks(filteredTasks)
     }
     const addTask = (title:string) => {
-        const newTask = {id: v1(), title, isDone: false}
+        const newTask:Task = {id: v1(), title, isDone: false}
         const newTasks= [newTask, ...tasks];
         setTasks(newTasks)
 

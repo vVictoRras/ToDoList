@@ -26,8 +26,6 @@ export const App = () => {
         {id: v1(), title: 'Typescript', isDone: false},
         {id: v1(), title: 'RTK query', isDone: false},
     ])
-    console.log(tasks)
-    console.log(...tasks)
 
     const deleteTask = (taskId: string) => {
         const filteredTasks = tasks.filter(task => {
@@ -35,12 +33,18 @@ export const App = () => {
         })
         setTasks(filteredTasks)
     }
-    const addTask = (title:string) => {
-        const newTask:Task = {id: v1(), title, isDone: false}
-        const newTasks= [newTask, ...tasks];
-        setTasks(newTasks)
 
+    const addTask = (title: string) => {
+        const newTask: Task = {id: v1(), title, isDone: false}
+        const newTasks = [newTask, ...tasks];
+        setTasks(newTasks)
     }
+
+    const changeTaskStatus = (taskId:string, isDone:boolean) => {
+        const newTasks = tasks.map(t=> t.id===taskId ? {...t, isDone } : t)
+        setTasks(newTasks)
+    }
+
 
     let filteredTasks = tasks
     if (filter === 'active') {
@@ -56,7 +60,9 @@ export const App = () => {
                           tasks={filteredTasks}
                           deleteTask={deleteTask}
                           changeFilter={changeFilter}
-                          addTask={addTask}/>
+                          addTask={addTask}
+                          changeTaskStatus={changeTaskStatus}
+                          activeFilter={filter}/>
         </div>
     )
 }

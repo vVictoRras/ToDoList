@@ -56,12 +56,7 @@ export const App = () => {
                 filteredTasks = tasks.filter(t => t.isDone)
                 break;
         }
-        // if (filter === 'active') {
-        //     return ()
-        // }
-        // if (filter === 'completed') {
-        //     return (filteredTasks = tasks.filter(t => t.isDone))
-        // }
+
         return filteredTasks
     }
     //

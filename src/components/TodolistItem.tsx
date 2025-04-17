@@ -13,7 +13,15 @@ type Props = {
 }
 
 
-export const TodolistItem = ({title, tasks, deleteTask, changeFilter, addTask, changeTaskStatus, activeFilter}: Props) => {
+export const TodolistItem = ({
+                                 title,
+                                 tasks,
+                                 deleteTask,
+                                 changeFilter,
+                                 addTask,
+                                 changeTaskStatus,
+                                 activeFilter
+                             }: Props) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -73,7 +81,7 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, addTask, c
                                        checked={task.isDone}
                                        onChange={changeTaskStatusHandler}
                                 />
-                                <span  className={task.isDone ? 'is-done' : ''}>{task.title}</span>
+                                <span className={task.isDone ? 'is-done' : ''}>{task.title}</span>
                                 <Button title={'x'} onClick={deleteTaskHandler}/>
                             </li>
                         )

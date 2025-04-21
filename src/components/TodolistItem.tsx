@@ -1,30 +1,41 @@
-import {FilterValues, Task} from "../App.tsx";
+import {FilterValues, Task, Todolist} from "../App.tsx";
 import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
-    title: string,
+    todolist: Todolist
+    todolistsId:string
+    // title: string,
     tasks: Task[],
     deleteTask: (taskId: string) => void,
-    changeFilter: (filter: FilterValues) => void,
+    changeFilter: (todolistsId:string,filter: FilterValues) => void,
     addTask: (title: string) => void,
     changeTaskStatus: (taskId: string, isDone: boolean) => void,
-    activeFilter: FilterValues
+    activeFilter?: FilterValues
 }
 
 
 export const TodolistItem = ({
-                                 title,
+                                 todolistsId,
+                                 todolist: {title, filter},
                                  tasks,
                                  deleteTask,
                                  changeFilter,
                                  addTask,
                                  changeTaskStatus,
-                                 activeFilter
+                                 // activeFilter
                              }: Props) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
+
+    // let filteredTasks = tasks
+    // if (todolist.filter === 'active') {
+    //     filteredTasks = tasks.filter(task => !task.isDone)
+    // }
+    // if (todolist.filter === 'completed') {
+    //     filteredTasks = tasks.filter(task => task.isDone)
+    // }
 
     const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskTitle(e.currentTarget.value)
@@ -45,6 +56,10 @@ export const TodolistItem = ({
         } else {
             setError('Title should not be empty')
         }
+    }
+
+    const changeFilterTaskHandler = (activeFilter:FilterValues) => {
+        changeFilter(todolistsId ,activeFilter)
     }
 
     return (
@@ -89,15 +104,15 @@ export const TodolistItem = ({
                 </ul>
             )}
             <div>
-                <Button className={activeFilter === 'all' ? 'active-filter' : ''}
+                <Button className={filter === 'all' ? 'active-filter' : ''}
                         title={'All'}
-                        onClick={() => changeFilter('all')}/>
-                <Button className={activeFilter === 'active' ? 'active-filter' : ''}
+                        onClick={() => changeFilterTaskHandler('all')}/>
+                <Button className={filter === 'active' ? 'active-filter' : ''}
                         title={'Active'}
-                        onClick={() => changeFilter('active')}/>
-                <Button className={activeFilter === 'completed' ? 'active-filter' : ''}
+                        onClick={() => changeFilterTaskHandler('active')}/>
+                <Button className={filter === 'completed' ? 'active-filter' : ''}
                         title={'Completed'}
-                        onClick={() => changeFilter('completed')}/>
+                        onClick={() => changeFilterTaskHandler('completed')}/>
             </div>
         </div>
     )

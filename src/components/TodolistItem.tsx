@@ -4,26 +4,24 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
     todolist: Todolist
-    todolistsId:string
-    // title: string,
     tasks: Task[],
-    deleteTask: (taskId: string) => void,
-    changeFilter: (todolistsId:string,filter: FilterValues) => void,
-    addTask: (title: string) => void,
-    changeTaskStatus: (taskId: string, isDone: boolean) => void,
-    activeFilter?: FilterValues
+    deleteTask: (todolistId:string,taskId: string) => void,
+    changeFilter: (todolistId:string,filter: FilterValues) => void,
+    addTask: (todolistId:string,title: string) => void,
+    changeTaskStatus: (todolistId:string,taskId: string, isDone: boolean) => void,
+    filter: FilterValues
 }
 
 
 export const TodolistItem = ({
-                                 todolistsId,
-                                 todolist: {title, filter},
+
+                                 todolist: {id,title, filter},
                                  tasks,
                                  deleteTask,
                                  changeFilter,
                                  addTask,
                                  changeTaskStatus,
-                                 // activeFilter
+
                              }: Props) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -44,22 +42,22 @@ export const TodolistItem = ({
 
     const createTaskOnEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            addTask(newTaskTitle);
+            addTask(id,newTaskTitle);
             setNewTaskTitle("")
         }
     }
     const addNewTask = () => {
         const trimmedTitle = newTaskTitle.trim()
         if (trimmedTitle !== '') {
-            addTask(trimmedTitle)
+            addTask(id,trimmedTitle)
             setNewTaskTitle('')
         } else {
             setError('Title should not be empty')
         }
     }
 
-    const changeFilterTaskHandler = (activeFilter:FilterValues) => {
-        changeFilter(todolistsId ,activeFilter)
+    const changeFilterTaskHandler = (filter: FilterValues) => {
+        changeFilter(id ,filter)
     }
 
     return (
@@ -83,13 +81,12 @@ export const TodolistItem = ({
                     {tasks.map(task => {
                         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             const newStatusValue = e.currentTarget.checked
-                            changeTaskStatus(task.id, newStatusValue)
-                            console.log("changeTaskStatus", task.id, newStatusValue)
+                            changeTaskStatus(id,task.id, newStatusValue)
+
                         }
                         const deleteTaskHandler = () => {
-                            deleteTask(task.id)
+                            deleteTask(id,task.id)
                         }
-
                         return (
                             <li key={task.id}>
                                 <input type="checkbox"

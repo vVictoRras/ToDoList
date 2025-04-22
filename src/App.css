@@ -15,8 +15,12 @@
 }
 
 .active-filter {
-  background-color: lightgreen;
+  background-color: #a1b7f3;
 }
 .is-done {
   opacity: 0.5;
+}
+.container {
+  display: flex;
+  align-items: center;
 }

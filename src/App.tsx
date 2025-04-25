@@ -21,6 +21,13 @@ export type FilterValues = 'all' | 'active' | 'completed'
 
 export const App = () => {
 
+
+    const changeFilter = (todolistId: string, newFilter: FilterValues) => {
+        const newTodolists = todolists.map(todolist => {
+            return todolist.id === todolistId ? { ...todolist, filter:newFilter } : todolist
+        })
+        setTodolists(newTodolists)
+    }
     // const changeFilter = (filter: FilterValues) => {
     //     setFilter(filter)
     // }
@@ -80,12 +87,7 @@ export const App = () => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id == taskId ? { ...task, isDone } : task)})
     }
 
-    const changeFilter = (todolistId: string, newFilter: FilterValues) => {
-        const newTodolists = todolists.map(todolist => {
-            return todolist.id === todolistId ? { ...todolist, filter:newFilter } : todolist
-        })
-        setTodolists(newTodolists)
-    }
+
 
     const deleteTodolist=(todolistId: string)=>{
         setTodolists(todolists.filter(tl=> tl.id !== todolistId))

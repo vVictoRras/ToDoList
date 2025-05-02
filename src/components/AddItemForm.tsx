@@ -1,5 +1,6 @@
 import {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button} from "./Button.tsx";
+import {CustomButton} from "./Button.tsx";
+import {TextField} from "@mui/material";
 
 type AddItemFormProps = {
       addItem:(title: string) => void;
@@ -14,14 +15,13 @@ export const AddItemForm = ({addItem}:AddItemFormProps) => {
         setItemTitle(e.currentTarget.value)
         setError(null)
     }
-
     const createItemOnEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             addItem(ItemTitle);
             setItemTitle("")
         }
     }
-    const addItemOnClickHandler = () => {
+    const createItemOnClickHandler = () => {
         const trimmedTitle = ItemTitle.trim()
         if (trimmedTitle) {
             addItem(trimmedTitle)
@@ -33,15 +33,22 @@ export const AddItemForm = ({addItem}:AddItemFormProps) => {
 
     return (
         <div>
-            <input className={error ? 'error' : ''}
+            {/*<input className={error ? 'error' : ''}*/}
+            {/*       value={ItemTitle}*/}
+            {/*       placeholder="Enter task title"*/}
+            {/*       onChange={changeItemTitleHandler}*/}
+            {/*       onKeyPress={createItemOnEnterHandler}*/}
+            {/*/>*/}
+            <TextField error={!!error}
                    value={ItemTitle}
-                   placeholder="Enter task title"
+                       helperText={error}
+                       variant={"outlined"}
+                   label="Enter task title"
                    onChange={changeItemTitleHandler}
                    onKeyPress={createItemOnEnterHandler}
             />
-            <Button title={'+'} onClick={addItemOnClickHandler}/>
-
-            {error && <div className={'error-message'}>{error}</div>}
+            <CustomButton title={'+'} onClick={createItemOnClickHandler}/>
+            {/*{error && <div className={'error-message'}>{error}</div>}*/}
         </div>
     );
 };

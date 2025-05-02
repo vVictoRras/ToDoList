@@ -1,11 +1,13 @@
-
+import ControlPoint from "@mui/icons-material/ControlPoint";
+import {IconButton} from "@mui/material";
 
 type Props = {
-    title: string
     onClick?: () => void
-    className?: string
-}
+   }
 
-export const Button = ({ title, onClick,className }: Props) => {
-    return <button className={className} onClick={onClick}>{title}</button>
+export const CustomButton = ({onClick}: Props) => {
+    return <IconButton  onClick={onClick}>
+        <ControlPoint/>
+    </IconButton>
+
 }

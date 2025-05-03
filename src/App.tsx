@@ -3,12 +3,15 @@ import {TodolistItem} from "./components/TodolistItem.tsx";
 import {useState} from "react";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/AddItemForm.tsx";
-import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material';
+import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material';
 import Menu from '@mui/icons-material/Menu';
 import {MenuButton} from "./components/MenuButton.tsx";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
+
+type ThemeMode = 'dark' | 'light'
+
 
 export type Task = {
     id: string
@@ -48,6 +51,7 @@ export const App = () => {
             {id: v1(), title: 'Water', isDone: true},
         ],
     })
+
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
     const theme = createTheme({
@@ -165,6 +169,7 @@ export const App = () => {
     return (
         <div className={"app"}>
             <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <AppBar position="static">
                     <Toolbar>
                         <IconButton

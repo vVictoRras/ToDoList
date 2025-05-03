@@ -1,12 +1,12 @@
 import {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {CustomButton} from "./Button.tsx";
-import {TextField} from "@mui/material";
+import TextField from "@mui/material/TextField";
 
 type AddItemFormProps = {
-      addItem:(title: string) => void;
+    addItem: (title: string) => void;
 }
 
-export const AddItemForm = ({addItem}:AddItemFormProps) => {
+export const AddItemForm = ({addItem}: AddItemFormProps) => {
 
     const [ItemTitle, setItemTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -39,15 +39,17 @@ export const AddItemForm = ({addItem}:AddItemFormProps) => {
             {/*       onChange={changeItemTitleHandler}*/}
             {/*       onKeyPress={createItemOnEnterHandler}*/}
             {/*/>*/}
-            <TextField error={!!error}
-                   value={ItemTitle}
-                       helperText={error}
-                       variant={"outlined"}
-                   label="Enter task title"
-                   onChange={changeItemTitleHandler}
-                   onKeyPress={createItemOnEnterHandler}
+            <TextField
+                // error={!!error}
+                value={ItemTitle}
+                size={'small'}
+                // helperText={error}
+                variant={"outlined"}
+                label={error ? error : 'Enter task title'}
+                onChange={changeItemTitleHandler}
+                onKeyPress={createItemOnEnterHandler}
             />
-            <CustomButton title={'+'} onClick={createItemOnClickHandler}/>
+            <CustomButton onClick={createItemOnClickHandler}/>
             {/*{error && <div className={'error-message'}>{error}</div>}*/}
         </div>
     );

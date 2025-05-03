@@ -1,8 +1,7 @@
 
 import {EditableSpan} from "./EditableSpan.tsx";
-import {CustomButton} from "./Button.tsx";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {IconButton} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
 type TodolistTitleProps={
     title: string,

@@ -4,8 +4,9 @@ import {TodolistTitle} from "./TodolistTitle.tsx";
 import {FilterButtons} from "./FilterButtons.tsx";
 import {AddItemForm} from "./AddItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
-import {Checkbox, IconButton} from "@mui/material";
+import {Checkbox, IconButton, List, ListItem} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {GetListItemSX} from "./TodoListStyles.tsx";
 
 type Props = {
     todolist: Todolist
@@ -58,7 +59,7 @@ export const TodolistItem = ({
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : (
-                <div >
+                <List >
                     {tasks.map(task => {
                         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             const newStatusValue = e.currentTarget.checked
@@ -73,24 +74,28 @@ export const TodolistItem = ({
                         //     updateTaskTitle(id,task.id,updateTitle)
                         // }
                         return (
-                            <div key={task.id}>
+                            <ListItem key={task.id}
+                            sx={GetListItemSX(task.isDone) }
+                            >
                                 {/*<input type="checkbox"*/}
                                 {/*       checked={task.isDone}*/}
                                 {/*       onChange={changeTaskStatusHandler}*/}
                                 {/*/>*/}
-                                <Checkbox  onChange={changeTaskStatusHandler}
-                                           checked={task.isDone}
-                                />
+                                <div>
+                                    <Checkbox  onChange={changeTaskStatusHandler}
+                                               checked={task.isDone}
+                                    />
+                                    <EditableSpan task={task.isDone} oldTitle={task.title} onClick={(updateTitle)=>updateTaskTitleHandler(task.id,updateTitle)}/>
+                                </div>
 
-                                <EditableSpan task={task.isDone} oldTitle={task.title} onClick={(updateTitle)=>updateTaskTitleHandler(task.id,updateTitle)}/>
                                 {/*<CustomButton title={'x'} onClick={deleteTaskHandler}/>*/}
                                 <IconButton onClick={deleteTaskHandler}>
                                     <DeleteIcon />
                                 </IconButton>
-                            </div>
+                            </ListItem>
                         )
                     })}
-                </div>
+                </List>
             )}
             <div>
                 <FilterButtons filter={filter} onClick={changeFilterTaskHandler}/>

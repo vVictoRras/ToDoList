@@ -7,8 +7,8 @@ import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@
 import Menu from '@mui/icons-material/Menu';
 import {MenuButton} from "./components/MenuButton.tsx";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
-import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
+import {MaterialUISwitch} from "./components/UISwitch.tsx";
 
 type ThemeMode = 'dark' | 'light'
 
@@ -187,7 +187,7 @@ export const App = () => {
                         <MenuButton>Login</MenuButton>
                         <MenuButton>Log out</MenuButton>
                         <MenuButton background={theme.palette.primary.dark}>FAQ</MenuButton>
-                        <Switch color={'default'} onChange={changeMode} />
+                        <MaterialUISwitch onChange={changeMode} />
                     </Toolbar>
 
                 </AppBar>

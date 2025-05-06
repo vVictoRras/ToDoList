@@ -14,11 +14,17 @@ export const EditableSpan = ({oldTitle,onClick,task}: EditableSpanProps) => {
 
 
         const editHandler = () => {
-            setEdit(!edit)
             if (edit) {
-                onClick(updateTitle)
+                // Проверка на пустое значение перед сохранением
+                if (updateTitle.trim() === '') {
+                    setError('Title cannot be empty');
+                    return;
+                }
+                onClick(updateTitle);
             }
+            setEdit(!edit);
         }
+
     const updateTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUpdateTitle(e.currentTarget.value)
 
@@ -28,6 +34,8 @@ export const EditableSpan = ({oldTitle,onClick,task}: EditableSpanProps) => {
     return (
         edit ?
             <TextField
+                error={!!error}
+                label={error ? error : 'Enter title'}
                 autoFocus
                 value={updateTitle}
                 onBlur={editHandler}

@@ -40,7 +40,7 @@ export const AddItemForm = ({addItem}: AddItemFormProps) => {
             {/*       onKeyPress={createItemOnEnterHandler}*/}
             {/*/>*/}
             <TextField
-                // error={!!error}
+                error={!!error}
                 value={ItemTitle}
                 size={'small'}
                 // helperText={error}

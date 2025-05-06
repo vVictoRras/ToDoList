@@ -148,7 +148,8 @@ export const App = () => {
 
         return (
             <Grid key={tl.id}>
-                <Paper style={{padding: '10px', height: '100%'}}>
+                <Paper  style={{padding: '10px', height: '100%'}}
+                        elevation={5}>
                     <TodolistItem
                         key={tl.id}
                         todolist={tl}
@@ -186,7 +187,7 @@ export const App = () => {
                         </Typography>
                         <MenuButton>Login</MenuButton>
                         <MenuButton>Log out</MenuButton>
-                        <MenuButton background={theme.palette.primary.dark}>FAQ</MenuButton>
+                        <MenuButton background={theme.palette.primary.main}>FAQ</MenuButton>
                         <MaterialUISwitch onChange={changeMode} />
                     </Toolbar>
 

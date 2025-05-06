@@ -26,9 +26,11 @@ export const EditableSpan = ({oldTitle,onClick,task}: EditableSpanProps) => {
         }
 
     const updateTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setUpdateTitle(e.currentTarget.value)
-
-        setError(null)
+        setUpdateTitle(e.currentTarget.value);
+        // Сбрасываем ошибку при изменении текста
+        if (error) {
+            setError(null);
+        }
     }
 
     return (

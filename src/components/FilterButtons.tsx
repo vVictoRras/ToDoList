@@ -12,15 +12,19 @@ export const FilterButtons = ({filter, onClick}: FilterButtonProps) => {
     return (
         <div>
             <Box  sx={FilterButtonsContainerSX}>
-                <Button size={'small'} color={"success"} variant={filter === 'all' ? 'contained' : 'outlined'}
-                        onClick={() => onClick('all')}>{"ALL"}</Button>
-                <Button size={'small'} color={"primary"} variant={filter === 'active' ? 'contained' : 'outlined'}
-                        onClick={() => onClick('active')}>{'Active'}</Button>
-                <Button size={'small'} color={"secondary"} variant={filter === 'completed' ? 'contained' : 'outlined'}
-                        onClick={() => onClick('completed')}>{'Completed'}</Button>
-
+                <Button size={'small'}
+                        color={"success"}
+                        variant={filter === 'all' ? 'contained' : 'outlined'}
+                        onClick={() => onClick('all')}>ALL</Button>
+                <Button size={'small'}
+                        color={"primary"}
+                        variant={filter === 'active' ? 'contained' : 'outlined'}
+                        onClick={() => onClick('active')}>Active</Button>
+                <Button size={'small'}
+                        color={"secondary"}
+                        variant={filter === 'completed' ? 'contained' : 'outlined'}
+                        onClick={() => onClick('completed')}>Completed</Button>
             </Box>
-
         </div>
     );
 };

@@ -16,9 +16,15 @@ export const AddItemForm = ({addItem}: AddItemFormProps) => {
         setError(null)
     }
     const createItemOnEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        const trimmedTitle = ItemTitle.trim()
         if (event.key === 'Enter') {
-            addItem(ItemTitle);
-            setItemTitle("")
+            if (trimmedTitle) {
+                addItem(trimmedTitle)
+                setItemTitle('')
+            } else {
+                setError('Title should not be empty')
+            }
+
         }
     }
     const createItemOnClickHandler = () => {
@@ -47,7 +53,7 @@ export const AddItemForm = ({addItem}: AddItemFormProps) => {
                 variant={"outlined"}
                 label={error ? error : 'Enter task title'}
                 onChange={changeItemTitleHandler}
-                onKeyPress={createItemOnEnterHandler}
+                onKeyDown={createItemOnEnterHandler}
             />
             <CustomButton onClick={createItemOnClickHandler}/>
             {/*{error && <div className={'error-message'}>{error}</div>}*/}

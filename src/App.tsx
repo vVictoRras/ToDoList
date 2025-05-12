@@ -29,7 +29,6 @@ import {
     todolistsReducer
 } from "./modal/todolists-reducer"
 
-// Типы
 export type ThemeMode = 'light' | 'dark'
 export type FilterValues = 'all' | 'active' | 'completed'
 
@@ -49,25 +48,24 @@ export type TasksState = {
     [key: string]: Task[]
 }
 
-// Инициализация ID — вне компонента
-const initialTodolistId1 = v1()
-const initialTodolistId2 = v1()
+const TodolistId1 = v1()
+const TodolistId2 = v1()
 
 export const App = () => {
     const initialTodolists: Todolist[] = [
-        { id: initialTodolistId1, title: 'What to learn', filter: 'all' },
-        { id: initialTodolistId2, title: 'What to buy', filter: 'all' }
+        { id: TodolistId1, title: 'What to learn', filter: 'all' },
+        { id: TodolistId2, title: 'What to buy', filter: 'all' }
     ]
 
     const [todolists, dispatchTodolists] = useReducer(todolistsReducer, initialTodolists)
 
     const initialTasks: TasksState = {
-        [initialTodolistId1]: [
+        [TodolistId1]: [
             { id: v1(), title: 'HTML & CSS', isDone: true },
             { id: v1(), title: 'JavaScript', isDone: true },
             { id: v1(), title: 'React', isDone: false },
         ],
-        [initialTodolistId2]: [
+        [TodolistId2]: [
             { id: v1(), title: 'Bread', isDone: true },
             { id: v1(), title: 'Milk', isDone: false },
             { id: v1(), title: 'Fish', isDone: true },
@@ -87,8 +85,7 @@ export const App = () => {
     const changeMode = () => {
         setThemeMode(prev => (prev === 'light' ? 'dark' : 'light'))
     }
-
-    // Task handlers
+   //Task
     const deleteTask = (todolistId: string, taskId: string) => {
         dispatchTasks(removeTaskAC(todolistId, taskId))
     }
@@ -98,14 +95,16 @@ export const App = () => {
     }
 
     const updateTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        dispatchTasks(updateTaskTitleAC(todolistId, taskId, title))
+        if (title.trim()===' ')
+            return dispatchTasks(updateTaskTitleAC(todolistId, taskId, title))
+
     }
 
     const addTask = (todolistId: string, title: string) => {
         dispatchTasks(createTaskAC(todolistId, title))
     }
 
-    // Todolist handlers
+    // Todolist
     const deleteTodolist = (todolistId: string) => {
         dispatchTodolists(deleteTodolistAC(todolistId))
         dispatchTasks(deleteTodolistInTasksAC(todolistId))
@@ -118,14 +117,14 @@ export const App = () => {
     }
 
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        dispatchTodolists(changeTodolistTitleAC(todolistId, title))
+        if (title.trim() === ' ')
+            return dispatchTodolists(changeTodolistTitleAC(todolistId, title))
     }
 
     const changeFilter = (todolistId: string, filter: FilterValues) => {
         dispatchTodolists(changeTodolistFilterAC(todolistId, filter))
     }
 
-    // Render
     const todolistComponents = todolists.map(tl => {
         const filteredTasks = tl.filter === 'active'
             ? tasks[tl.id]?.filter(t => !t.isDone) || []

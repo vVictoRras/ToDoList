@@ -1,7 +1,12 @@
 import { beforeEach, expect, test } from 'vitest'
 import type {TasksState} from '../App'
-import {createTaskAC, removeTaskAC, tasksReducer} from "./tasks-reducer.ts";
-import {createTodolistAC, deleteTodolistAC} from "./todolists-reducer.ts";
+import {
+    createTaskAC,
+    createTodolistInTasksAC,
+    deleteTodolistInTasksAC,
+    removeTaskAC,
+    tasksReducer
+} from "./tasks-reducer.ts";
 import {v1} from "uuid";
 
 let startState: TasksState = {}
@@ -22,7 +27,8 @@ beforeEach(() => {
 })
 
 test('array should be created for new todolist', () => {
-    const endState = tasksReducer(startState, createTodolistAC({title:'New todolist'}))
+    const newTodolistId = v1()
+    const endState = tasksReducer(startState, createTodolistInTasksAC(newTodolistId))
 
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k !== 'todolistId1' && k !== 'todolistId2')
@@ -34,7 +40,7 @@ test('array should be created for new todolist', () => {
     expect(endState[newKey]).toEqual([])
 })
 test('property with todolistId should be deleted', () => {
-    const endState = tasksReducer(startState, deleteTodolistAC('todolistId2'))
+    const endState = tasksReducer(startState, deleteTodolistInTasksAC('todolistId2'))
 
     const keys = Object.keys(endState)
 
@@ -47,10 +53,10 @@ test('property with todolistId should be deleted', () => {
 test('correct task should be created at correct array', () => {
     const endState = tasksReducer(
         startState,
-        createTaskAC({
-            todolistId: 'todolistId2',
-            title: 'juice',
-        })
+        createTaskAC(
+           'todolistId2',
+            'juice',
+        )
     )
 
     expect(endState.todolistId1.length).toBe(3)
@@ -62,7 +68,7 @@ test('correct task should be created at correct array', () => {
 test('correct task should be deleted', () => {
     const endState = tasksReducer(
         startState,
-        removeTaskAC({ todolistId: 'todolistId2', taskId: '2' })
+        removeTaskAC('todolistId2',  '2' )
     )
 
     expect(endState).toEqual({

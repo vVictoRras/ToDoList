@@ -1,85 +1,107 @@
-import type {TasksState} from '../App'
-import {v1} from "uuid";
+import {v1} from "uuid"
+import type {Task, TasksState} from "../App"
 
+// Action Creators
+export const removeTaskAC = (todolistId: string, taskId: string) => ({
+    type: 'REMOVE_TASK',
+    payload: {todolistId, taskId}
+} as const)
 
+export const createTaskAC = (todolistId: string, title: string) => ({
+    type: 'CREATE_TASK',
+    payload: {todolistId, title}
+} as const)
 
-const initialState: TasksState = {}
+export const changeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean) => ({
+    type: 'CHANGE_TASK_STATUS',
+    payload: {todolistId, taskId, isDone}
+} as const)
 
-export const tasksReducer = (tasks: TasksState = initialState, action: Actions): TasksState => {
+export const updateTaskTitleAC = (todolistId: string, taskId: string, title: string) => ({
+    type: 'UPDATE_TASK_TITLE',
+    payload: {todolistId, taskId, title}
+} as const)
+
+export const createTodolistInTasksAC = (todolistId: string) => ({
+    type: 'CREATE_TODOLIST_IN_TASKS',
+    payload: {todolistId}
+} as const)
+
+export const deleteTodolistInTasksAC = (todolistId: string) => ({
+    type: 'DELETE_TODOLIST_IN_TASKS',
+    payload: {todolistId}
+} as const)
+
+// Все допустимые Action
+type Actions =
+    | ReturnType<typeof removeTaskAC>
+    | ReturnType<typeof createTaskAC>
+    | ReturnType<typeof changeTaskStatusAC>
+    | ReturnType<typeof updateTaskTitleAC>
+    | ReturnType<typeof createTodolistInTasksAC>
+    | ReturnType<typeof deleteTodolistInTasksAC>
+
+// Reducer
+export const tasksReducer = (
+    state: TasksState = {},
+    action: Actions
+): TasksState => {
     switch (action.type) {
-        case 'CREATE-TODOLIST-IN-TASKS': {
-            const {id} = action.payload
-            return {...tasks, [id]: []}
-        }
-        case 'DELETE_TODOLIST': {
-            const {id} = action.payload
-            delete tasks[id];
-            return {...tasks}
-        }
-        case "REMOVE-TASK": {
+        case 'REMOVE_TASK': {
             const {todolistId, taskId} = action.payload
             return {
-                ...tasks,
-                [todolistId]: tasks[todolistId].filter(task => task.id !== taskId)
-        }}
-        case "CREATE_TASK":{
-            const newTask = {id:v1(), title: action.payload.title, isDone: false}
-            return {...tasks, [action.payload.todolistId]: [newTask, ...tasks[action.payload.todolistId]]}
+                ...state,
+                [todolistId]: state[todolistId].filter(task => task.id !== taskId)
+            }
         }
-        case "UPDATE_TASK_TITLE": {
+
+        case 'CREATE_TASK': {
+            const {todolistId, title} = action.payload
+            const newTask: Task = {
+                id: v1(),
+                title,
+                isDone: false
+            }
+            return {
+                ...state,
+                [todolistId]: [newTask, ...state[todolistId]]
+            }
+        }
+
+        case 'CHANGE_TASK_STATUS': {
+            const {todolistId, taskId, isDone} = action.payload
+            return {
+                ...state,
+                [todolistId]: state[todolistId].map(task =>
+                    task.id === taskId ? {...task, isDone} : task
+                )
+            }
+        }
+
+        case 'UPDATE_TASK_TITLE': {
             const {todolistId, taskId, title} = action.payload
             return {
-                ...tasks,
-                [todolistId]: tasks[todolistId].map(task =>
+                ...state,
+                [todolistId]: state[todolistId].map(task =>
                     task.id === taskId ? {...task, title} : task
                 )
             }
         }
-        case 'CHANGE_TASK':{
-            const { todolistId, taskId, isDone } = action.payload
+
+        case 'CREATE_TODOLIST_IN_TASKS': {
             return {
-                ...tasks,
-                [todolistId]: tasks[todolistId].map(task =>
-                    task.id === taskId ? { ...task, isDone } : task
-                )
+                ...state,
+                [action.payload.todolistId]: []
             }
         }
+
+        case 'DELETE_TODOLIST_IN_TASKS': {
+            const newState = {...state}
+            delete newState[action.payload.todolistId]
+            return newState
+        }
+
         default:
-            return tasks
+            return state
     }
 }
-
-type Actions = ReturnType<typeof createTodolistInTasksAC> | ReturnType<typeof removeTaskAC> | ReturnType<typeof changeTaskStatusAC> | ReturnType<typeof updateTaskTitleAC> | ReturnType<typeof CreateTaskAC>
-
-export const removeTaskAC =(payload:{todolistId:string ,taskId: string}) => {
-    return {
-        type: 'REMOVE-TASK',
-        payload
-    } as const
-}
-
-export const createTaskAC =(payload:{todolistId:string,title:string}) =>{
-    return{
-        type: 'CREATE_TASK',
-        payload
-    }as const
-}
-
-export const changeTaskStatusAC =(payload:{todolistId: string, taskId: string, isDone: boolean}) =>{
-    return{
-        type: 'CHANGE_TASK',
-        payload
-    }as const
-}
-
-export const updateTaskTitleAC =(payload:{todolistId: string, taskId: string, updateTitle: string})=>{
-    return{
-        type: 'UPDATE_TASK_TITLE',
-        payload
-    }as const
-}
-
-export const createTodolistInTasksAC = (todolistId: string) => ({
-    type: 'CREATE-TODOLIST-IN-TASKS',
-    todolistId
-} as const)
